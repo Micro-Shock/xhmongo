@@ -1,6 +1,6 @@
 # == Class: mongodb
 #
-# Direct use of this class is deprecated. Please use mongodb::server
+# Direct use of this class is deprecated. Please use xhmongo::server
 #
 # Manage mongodb installations on RHEL, CentOS, Debian and Ubuntu - either
 # installing from the 10Gen repo or from EPEL in the case of EL systems.
@@ -37,16 +37,16 @@ class mongodb (
   # Deprecated parameters
   $enable_10gen    = undef,
 
-  $init            = $mongodb::params::service_provider,
+  $init            = $xhmongo::params::service_provider,
   $packagename     = undef,
   $version         = undef,
-  $servicename     = $mongodb::params::service_name,
+  $servicename     = $xhmongo::params::service_name,
   $service_enable  = true, #deprecated
-  $logpath         = $mongodb::params::logpath,
+  $logpath         = $xhmongo::params::logpath,
   $logappend       = true,
-  $fork            = $mongodb::params::fork,
+  $fork            = $xhmongo::params::fork,
   $port            = undef,
-  $dbpath          = $mongodb::params::dbpath,
+  $dbpath          = $xhmongo::params::dbpath,
   $journal         = undef,
   $nojournal       = undef,
   $smallfiles      = undef,
@@ -82,14 +82,14 @@ class mongodb (
   $ipv6            = undef,
   $bind_ip         = undef,
   $pidfilepath     = undef
-) inherits mongodb::params {
+) inherits xhmongo::params {
 
   if $enable_10gen {
-    fail("Parameter enable_10gen is no longer supported. Please use class { 'mongodb::globals': manage_package_repo => true }")
+    fail("Parameter enable_10gen is no longer supported. Please use class { 'xhmongo::globals': manage_package_repo => true }")
   }
 
   if $version {
-    fail("Parameter version is no longer supported. Please use class { 'mongodb::globals': version => VERSION }")
+    fail("Parameter version is no longer supported. Please use class { 'xhmongo::globals': version => VERSION }")
   }
 
   if $oplog {
@@ -97,10 +97,10 @@ class mongodb (
   }
 
   notify { 'An attempt has been made below to automatically apply your custom
-    settings to mongodb::server. Please verify this works in a safe test
+    settings to xhmongo::server. Please verify this works in a safe test
     environment.': }
 
-  class { '::mongodb::server':
+  class { '::xhmongo::server':
     package_name    => $packagename,
     logpath         => $logpath,
     logappend       => $logappend,

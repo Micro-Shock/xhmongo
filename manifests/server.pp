@@ -1,32 +1,32 @@
 # This installs a MongoDB server. See README.md for more details.
-class mongodb::server (
-  $ensure           = $mongodb::params::ensure,
+class xhmongo::server (
+  $ensure           = $xhmongo::params::ensure,
 
-  $user             = $mongodb::params::user,
-  $group            = $mongodb::params::group,
+  $user             = $xhmongo::params::user,
+  $group            = $xhmongo::params::group,
 
-  $config           = $mongodb::params::config,
-  $dbpath           = $mongodb::params::dbpath,
-  $pidfilepath      = $mongodb::params::pidfilepath,
-  $rcfile           = $mongodb::params::rcfile,
+  $config           = $xhmongo::params::config,
+  $dbpath           = $xhmongo::params::dbpath,
+  $pidfilepath      = $xhmongo::params::pidfilepath,
+  $rcfile           = $xhmongo::params::rcfile,
 
-  $service_manage   = $mongodb::params::service_manage,
-  $service_provider = $mongodb::params::service_provider,
-  $service_name     = $mongodb::params::service_name,
-  $service_enable   = $mongodb::params::service_enable,
-  $service_ensure   = $mongodb::params::service_ensure,
-  $service_status   = $mongodb::params::service_status,
+  $service_manage   = $xhmongo::params::service_manage,
+  $service_provider = $xhmongo::params::service_provider,
+  $service_name     = $xhmongo::params::service_name,
+  $service_enable   = $xhmongo::params::service_enable,
+  $service_ensure   = $xhmongo::params::service_ensure,
+  $service_status   = $xhmongo::params::service_status,
 
-  $package_ensure  = $mongodb::params::package_ensure,
-  $package_name    = $mongodb::params::server_package_name,
+  $package_ensure  = $xhmongo::params::package_ensure,
+  $package_name    = $xhmongo::params::server_package_name,
 
-  $logpath         = $mongodb::params::logpath,
-  $bind_ip         = $mongodb::params::bind_ip,
+  $logpath         = $xhmongo::params::logpath,
+  $bind_ip         = $xhmongo::params::bind_ip,
   $ipv6            = undef,
   $logappend       = true,
-  $fork            = $mongodb::params::fork,
+  $fork            = $xhmongo::params::fork,
   $port            = undef,
-  $journal         = $mongodb::params::journal,
+  $journal         = $xhmongo::params::journal,
   $nojournal       = undef,
   $smallfiles      = undef,
   $cpu             = undef,
@@ -67,13 +67,13 @@ class mongodb::server (
   $ssl             = undef,
   $ssl_key         = undef,
   $ssl_ca          = undef,
-  $restart         = $mongodb::params::restart,
+  $restart         = $xhmongo::params::restart,
   $storage_engine  = undef,
 
-  $create_admin    = $mongodb::params::create_admin,
-  $admin_username  = $mongodb::params::admin_username,
+  $create_admin    = $xhmongo::params::create_admin,
+  $admin_username  = $xhmongo::params::admin_username,
   $admin_password  = undef,
-  $store_creds     = $mongodb::params::store_creds,
+  $store_creds     = $xhmongo::params::store_creds,
   $admin_roles     = ['userAdmin', 'readWrite', 'dbAdmin',
                       'dbAdminAnyDatabase', 'readAnyDatabase',
                       'readWriteAnyDatabase', 'userAdminAnyDatabase',
@@ -85,7 +85,7 @@ class mongodb::server (
   $slave           = undef,
   $only            = undef,
   $source          = undef,
-) inherits mongodb::params {
+) inherits xhmongo::params {
 
 
   if $ssl {
@@ -94,39 +94,39 @@ class mongodb::server (
 
   if ($ensure == 'present' or $ensure == true) {
     if $restart {
-      anchor { 'mongodb::server::start': }->
-      class { 'mongodb::server::install': }->
+      anchor { 'xhmongo::server::start': }->
+      class { 'xhmongo::server::install': }->
       # If $restart is true, notify the service on config changes (~>)
-      class { 'mongodb::server::config': }~>
-      class { 'mongodb::server::service': }->
-      anchor { 'mongodb::server::end': }
+      class { 'xhmongo::server::config': }~>
+      class { 'xhmongo::server::service': }->
+      anchor { 'xhmongo::server::end': }
     } else {
-      anchor { 'mongodb::server::start': }->
-      class { 'mongodb::server::install': }->
+      anchor { 'xhmongo::server::start': }->
+      class { 'xhmongo::server::install': }->
       # If $restart is false, config changes won't restart the service (->)
-      class { 'mongodb::server::config': }->
-      class { 'mongodb::server::service': }->
-      anchor { 'mongodb::server::end': }
+      class { 'xhmongo::server::config': }->
+      class { 'xhmongo::server::service': }->
+      anchor { 'xhmongo::server::end': }
     }
   } else {
-    anchor { 'mongodb::server::start': }->
-    class { '::mongodb::server::service': }->
-    class { '::mongodb::server::config': }->
-    class { '::mongodb::server::install': }->
-    anchor { 'mongodb::server::end': }
+    anchor { 'xhmongo::server::start': }->
+    class { '::xhmongo::server::service': }->
+    class { '::xhmongo::server::config': }->
+    class { '::xhmongo::server::install': }->
+    anchor { 'xhmongo::server::end': }
   }
 
   if $create_admin {
     validate_string($admin_password)
 
-    mongodb::db { 'admin':
+    xhmongo::db { 'admin':
       user     => $admin_username,
       password => $admin_password,
       roles    => $admin_roles
     }
 
     # Make sure it runs at the correct point
-    Anchor['mongodb::server::end'] -> Mongodb::Db['admin']
+    Anchor['xhmongo::server::end'] -> Mongodb::Db['admin']
 
     # Make sure it runs before other DB creation
     Mongodb::Db['admin'] -> Mongodb::Db <| title != 'admin' |>
@@ -160,14 +160,14 @@ class mongodb::server (
       }
 
       # Wrap the replset class
-      class { 'mongodb::replset':
+      class { 'xhmongo::replset':
         sets => $replset_config_REAL
       }
-      Anchor['mongodb::server::end'] -> Class['mongodb::replset']
+      Anchor['xhmongo::server::end'] -> Class['xhmongo::replset']
 
       # Make sure that the ordering is correct
       if $create_admin {
-        Class['mongodb::replset'] -> Mongodb::Db['admin']
+        Class['xhmongo::replset'] -> Mongodb::Db['admin']
       }
 
     }

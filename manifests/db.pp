@@ -1,4 +1,4 @@
-# == Class: mongodb::db
+# == Class: xhmongo::db
 #
 # Class for creating mongodb databases and users.
 #
@@ -10,7 +10,7 @@
 #  roles (default: ['dbAdmin']) - array with user roles.
 #  tries (default: 10) - The maximum amount of two second tries to wait MongoDB startup.
 #
-define mongodb::db (
+define xhmongo::db (
   $user,
   $password_hash = false,
   $password      = false,
@@ -28,7 +28,7 @@ define mongodb::db (
   } elsif $password {
     $hash = mongodb_password($user, $password)
   } else {
-    fail("Parameter 'password_hash' or 'password' should be provided to mongodb::db.")
+    fail("Parameter 'password_hash' or 'password' should be provided to xhmongo::db.")
   }
 
   mongodb_user { "User ${user} on db ${name}":

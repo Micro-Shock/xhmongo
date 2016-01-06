@@ -1,6 +1,6 @@
 # Wrapper class useful for hiera based deployments
 
-class mongodb::shardsvr(
+class xhmongo::shardsvr(
   $shards = undef
 ) {
 

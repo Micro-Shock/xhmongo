@@ -1,7 +1,7 @@
 # Class for setting cross-class global overrides. See README.md for more
 # details.
 
-class mongodb::globals (
+class xhmongo::globals (
   $server_package_name   = undef,
   $client_package_name   = undef,
   $mongos_package_name   = undef,
@@ -39,7 +39,7 @@ class mongodb::globals (
 
   # Setup of the repo only makes sense globally, so we are doing it here.
   if($manage_package_repo) {
-    class { '::mongodb::repo':
+    class { '::xhmongo::repo':
       ensure        => present,
       repo_location => $repo_location,
       proxy         => $repo_proxy,

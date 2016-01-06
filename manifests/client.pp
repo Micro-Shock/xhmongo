@@ -8,11 +8,11 @@
 # [package_name] Name of the package to install the client from. Default
 #   is repository dependent.
 #
-class mongodb::client (
-  $ensure       = $mongodb::params::package_ensure_client,
-  $package_name = $mongodb::params::client_package_name,
-) inherits mongodb::params {
-  anchor { '::mongodb::client::start': } ->
-  class { '::mongodb::client::install': } ->
-  anchor { '::mongodb::client::end': }
+class xhmongo::client (
+  $ensure       = $xhmongo::params::package_ensure_client,
+  $package_name = $xhmongo::params::client_package_name,
+) inherits xhmongo::params {
+  anchor { '::xhmongo::client::start': } ->
+  class { '::xhmongo::client::install': } ->
+  anchor { '::xhmongo::client::end': }
 }

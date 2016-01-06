@@ -1,13 +1,13 @@
 # PRIVATE CLASS: do not call directly
-class mongodb::mongos::service (
-  $service_manage   = $mongodb::mongos::service_manage,
-  $service_name     = $mongodb::mongos::service_name,
-  $service_enable   = $mongodb::mongos::service_enable,
-  $service_ensure   = $mongodb::mongos::service_ensure,
-  $service_status   = $mongodb::mongos::service_status,
-  $service_provider = $mongodb::mongos::service_provider,
-  $bind_ip          = $mongodb::mongos::bind_ip,
-  $port             = $mongodb::mongos::port,
+class xhmongo::mongos::service (
+  $service_manage   = $xhmongo::mongos::service_manage,
+  $service_name     = $xhmongo::mongos::service_name,
+  $service_enable   = $xhmongo::mongos::service_enable,
+  $service_ensure   = $xhmongo::mongos::service_ensure,
+  $service_status   = $xhmongo::mongos::service_status,
+  $service_provider = $xhmongo::mongos::service_provider,
+  $bind_ip          = $xhmongo::mongos::bind_ip,
+  $port             = $xhmongo::mongos::port,
 ) {
 
   $service_ensure_real = $service_ensure ? {

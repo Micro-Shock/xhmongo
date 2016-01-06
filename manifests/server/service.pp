@@ -1,15 +1,15 @@
 # PRIVATE CLASS: do not call directly
-class mongodb::server::service {
-  $ensure           = $mongodb::server::service_ensure
-  $service_manage   = $mongodb::server::service_manage
-  $service_enable   = $mongodb::server::service_enable
-  $service_name     = $mongodb::server::service_name
-  $service_provider = $mongodb::server::service_provider
-  $service_status   = $mongodb::server::service_status
-  $bind_ip          = $mongodb::server::bind_ip
-  $port             = $mongodb::server::port
-  $configsvr        = $mongodb::server::configsvr
-  $shardsvr         = $mongodb::server::shardsvr
+class xhmongo::server::service {
+  $ensure           = $xhmongo::server::service_ensure
+  $service_manage   = $xhmongo::server::service_manage
+  $service_enable   = $xhmongo::server::service_enable
+  $service_name     = $xhmongo::server::service_name
+  $service_provider = $xhmongo::server::service_provider
+  $service_status   = $xhmongo::server::service_status
+  $bind_ip          = $xhmongo::server::bind_ip
+  $port             = $xhmongo::server::port
+  $configsvr        = $xhmongo::server::configsvr
+  $shardsvr         = $xhmongo::server::shardsvr
 
   if !$port {
     if $configsvr {

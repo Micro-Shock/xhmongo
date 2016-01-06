@@ -1,7 +1,7 @@
 # PRIVATE CLASS: do not call directly
-class mongodb::server::install {
-  $package_ensure = $mongodb::server::package_ensure
-  $package_name   = $mongodb::server::package_name
+class xhmongo::server::install {
+  $package_ensure = $xhmongo::server::package_ensure
+  $package_name   = $xhmongo::server::package_name
 
   case $package_ensure {
     true:     {

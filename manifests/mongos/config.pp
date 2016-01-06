@@ -1,9 +1,9 @@
 # PRIVATE CLASS: do not call directly
-class mongodb::mongos::config (
-  $ensure         = $mongodb::mongos::ensure,
-  $config         = $mongodb::mongos::config,
-  $config_content = $mongodb::mongos::config_content,
-  $configdb       = $mongodb::mongos::configdb,
+class xhmongo::mongos::config (
+  $ensure         = $xhmongo::mongos::ensure,
+  $config         = $xhmongo::mongos::config,
+  $config_content = $xhmongo::mongos::config_content,
+  $configdb       = $xhmongo::mongos::configdb,
 ) {
 
   if ($ensure == 'present' or $ensure == true) {

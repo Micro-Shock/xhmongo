@@ -1,7 +1,7 @@
 # PRIVATE CLASS: do not call directly
-class mongodb::mongos::install (
-  $package_ensure           = $mongodb::mongos::package_ensure,
-  $package_name             = $mongodb::mongos::package_name,
+class xhmongo::mongos::install (
+  $package_ensure           = $xhmongo::mongos::package_ensure,
+  $package_name             = $xhmongo::mongos::package_name,
 ) {
 
   case $package_ensure {

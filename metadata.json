@@ -1,10 +1,10 @@
 {
-  "name": "puppetlabs-mongodb",
+  "name": "xhmongo",
   "version": "0.11.0",
-  "author": "puppetlabs",
+  "author": "puppetlabs - forked by Ian McBeth",
   "summary": "Installs MongoDB on RHEL/Ubuntu/Debian.",
   "license": "Apache-2.0",
-  "source": "https://github.com/puppetlabs/puppetlabs-mongodb",
+  "source": "https://github.com/Micro-Shock/xhmongo",
   "project_page": "https://github.com/puppetlabs/puppetlabs-mongodb",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
   "operatingsystem_support": [

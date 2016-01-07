@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::db', :type => :define do
+describe 'xhmongo::db', :type => :define do
   let(:title) { 'testdb' }
 
   let(:params) {
@@ -9,7 +9,7 @@ describe 'mongodb::db', :type => :define do
     }
   }
 
-  it 'should contain mongodb_database with mongodb::server requirement' do
+  it 'should contain mongodb_database with xhmongo::server requirement' do
     is_expected.to contain_mongodb_database('testdb')
   end
 

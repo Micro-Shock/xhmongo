@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::mongos::service', :type => :class do
+describe 'xhmongo::mongos::service', :type => :class do
 
   context 'on Debian with service_manage set to true' do
     let :facts do
@@ -11,7 +11,7 @@ describe 'mongodb::mongos::service', :type => :class do
     end
 
     let :pre_condition do          
-      "class { 'mongodb::mongos':
+      "class { 'xhmongo::mongos':
          configdb => ['127.0.0.1:27019'],
        }"
     end 
@@ -35,7 +35,7 @@ describe 'mongodb::mongos::service', :type => :class do
     end
 
     let :pre_condition do
-      "class { 'mongodb::mongos':
+      "class { 'xhmongo::mongos':
          configdb => ['127.0.0.1:27019'],
          service_manage => false,
        }"
@@ -56,7 +56,7 @@ describe 'mongodb::mongos::service', :type => :class do
     end
 
     let :pre_condition do
-      "class { 'mongodb::mongos':
+      "class { 'xhmongo::mongos':
          configdb => ['127.0.0.1:27019'],
        }"
     end
@@ -84,7 +84,7 @@ describe 'mongodb::mongos::service', :type => :class do
     end
 
     let :pre_condition do
-      "class { 'mongodb::mongos':
+      "class { 'xhmongo::mongos':
          configdb => ['127.0.0.1:27019'],
          service_manage => false,
        }"

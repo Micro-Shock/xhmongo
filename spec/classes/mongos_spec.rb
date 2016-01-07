@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::mongos' do
+describe 'xhmongo::mongos' do
   let :facts do
     {
       :osfamily        => 'Debian',
@@ -15,9 +15,9 @@ describe 'mongodb::mongos' do
   end
 
   context 'with defaults' do
-    it { is_expected.to contain_class('mongodb::mongos::install') }
-    it { is_expected.to contain_class('mongodb::mongos::config') }
-    it { is_expected.to contain_class('mongodb::mongos::service') }
+    it { is_expected.to contain_class('xhmongo::mongos::install') }
+    it { is_expected.to contain_class('xhmongo::mongos::config') }
+    it { is_expected.to contain_class('xhmongo::mongos::service') }
   end
 
   context 'when deploying on Solaris' do

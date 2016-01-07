@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::repo', :type => :class do
+describe 'xhmongo::repo', :type => :class do
 
   context 'when deploying on Debian' do
     let :facts do
@@ -12,7 +12,7 @@ describe 'mongodb::repo', :type => :class do
     end
 
     it {
-      is_expected.to contain_class('mongodb::repo::apt')
+      is_expected.to contain_class('xhmongo::repo::apt')
     }
   end
 
@@ -25,7 +25,7 @@ describe 'mongodb::repo', :type => :class do
     end
 
     it {
-      is_expected.to contain_class('mongodb::repo::yum')
+      is_expected.to contain_class('xhmongo::repo::yum')
     }
   end
 
@@ -44,7 +44,7 @@ describe 'mongodb::repo', :type => :class do
       }
     end
     it {
-      is_expected.to contain_class('mongodb::repo::yum')
+      is_expected.to contain_class('xhmongo::repo::yum')
     }
     it do
       should contain_yumrepo('mongodb').with({

@@ -14,27 +14,27 @@ describe 'mongodb_database' do
           after :all do
             puts "XXX uninstalls mongodb because changing the port with tengen doesn't work because they have a crappy init script"
             pp = <<-EOS
-              class {'mongodb::globals': manage_package_repo => #{tengen}, }
-              -> class { 'mongodb::server':
+              class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+              -> class { 'xhmongo::server':
                    ensure => absent,
                    package_ensure => absent,
                    service_ensure => stopped,
                    service_enable => false
                  }
-              -> class { 'mongodb::client': ensure => absent, }
+              -> class { 'xhmongo::client': ensure => absent, }
             EOS
             apply_manifest(pp, :catch_failures => true)
           end
           it 'should compile with no errors' do
             pp = <<-EOS
-              class { 'mongodb::globals': manage_package_repo => #{tengen}, version => #{version.nil? ? 'undef' : version} }
-              -> class { 'mongodb::server': }
-              -> class { 'mongodb::client': }
-              -> mongodb::db { 'testdb1':
+              class { 'xhmongo::globals': manage_package_repo => #{tengen}, version => #{version.nil? ? 'undef' : version} }
+              -> class { 'xhmongo::server': }
+              -> class { 'xhmongo::client': }
+              -> xhmongo::db { 'testdb1':
                 user     => 'testuser',
                 password => 'testpass',
               }
-              -> mongodb::db { 'testdb2':
+              -> xhmongo::db { 'testdb2':
                 user     => 'testuser',
                 password => 'testpass',
               }
@@ -55,27 +55,27 @@ describe 'mongodb_database' do
           after :all do
             puts "XXX uninstalls mongodb because changing the port with tengen doesn't work because they have a crappy init script"
             pp = <<-EOS
-              class {'mongodb::globals': manage_package_repo => #{tengen}, }
-              -> class { 'mongodb::server':
+              class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+              -> class { 'xhmongo::server':
                    ensure => absent,
                    package_ensure => absent,
                    service_ensure => stopped,
                    service_enable => false
                  }
-              -> class { 'mongodb::client': ensure => absent, }
+              -> class { 'xhmongo::client': ensure => absent, }
             EOS
             apply_manifest(pp, :catch_failures => true)
           end
           it 'should work with no errors' do
             pp = <<-EOS
-              class { 'mongodb::globals': manage_package_repo => #{tengen}, }
-              -> class { 'mongodb::server': port => 27018 }
-              -> class { 'mongodb::client': }
-              -> mongodb::db { 'testdb1':
+              class { 'xhmongo::globals': manage_package_repo => #{tengen}, }
+              -> class { 'xhmongo::server': port => 27018 }
+              -> class { 'xhmongo::client': }
+              -> xhmongo::db { 'testdb1':
                 user     => 'testuser',
                 password => 'testpass',
               }
-              -> mongodb::db { 'testdb2':
+              -> xhmongo::db { 'testdb2':
                 user     => 'testuser',
                 password => 'testpass',
               }

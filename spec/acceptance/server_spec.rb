@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'mongodb::server class' do
+describe 'xhmongo::server class' do
 
   shared_examples 'normal tests' do |tengen|
     if tengen
@@ -34,14 +34,14 @@ describe 'mongodb::server class' do
         if tengen
           puts "XXX uninstalls mongodb because changing the port with tengen doesn't work because they have a crappy init script"
           pp = <<-EOS
-            class {'mongodb::globals': manage_package_repo => #{tengen}, }
-            -> class { 'mongodb::server':
+            class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+            -> class { 'xhmongo::server':
                  ensure => absent,
                  package_ensure => absent,
                  service_ensure => stopped,
                  service_enable => false
                }
-            -> class { 'mongodb::client': ensure => absent, }
+            -> class { 'xhmongo::client': ensure => absent, }
           EOS
           apply_manifest(pp, :catch_failures => true)
         end
@@ -49,9 +49,9 @@ describe 'mongodb::server class' do
 
       it 'should work with no errors' do
         pp = <<-EOS
-          class { 'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server': }
-          -> class { 'mongodb::client': }
+          class { 'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server': }
+          -> class { 'xhmongo::client': }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
@@ -86,9 +86,9 @@ describe 'mongodb::server class' do
     context "test using custom port and 10gen => #{tengen}" do
       it 'change port to 27018' do
         pp = <<-EOS
-          class { 'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server': port => 27018, }
-          -> class { 'mongodb::client': }
+          class { 'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server': port => 27018, }
+          -> class { 'xhmongo::client': }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
@@ -103,14 +103,14 @@ describe 'mongodb::server class' do
     describe "uninstalling with 10gen => #{tengen}" do
       it 'uninstalls mongodb' do
         pp = <<-EOS
-          class {'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server':
+          class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server':
                ensure => absent,
                package_ensure => absent,
                service_ensure => stopped,
                service_enable => false
              }
-          -> class { 'mongodb::client': ensure => absent, }
+          -> class { 'xhmongo::client': ensure => absent, }
         EOS
         apply_manifest(pp, :catch_failures => true)
       end
@@ -150,15 +150,15 @@ describe 'mongodb::server class' do
     context "default parameters with 10gen => #{tengen} and auth => true" do
       it 'should work with no errors with authentication enabled' do
         pp = <<-EOS
-          class { 'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server':
+          class { 'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server':
             auth           => true,
             create_admin   => true,
             store_creds    => true,
             admin_username => 'admin',
             admin_password => 'password'
           }
-          class { 'mongodb::client': }
+          class { 'xhmongo::client': }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
@@ -215,14 +215,14 @@ describe 'mongodb::server class' do
     describe "uninstalling with 10gen => #{tengen}" do
       it 'uninstalls mongodb' do
         pp = <<-EOS
-          class {'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server':
+          class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server':
                ensure => absent,
                package_ensure => absent,
                service_ensure => stopped,
                service_enable => false
              }
-          -> class { 'mongodb::client': ensure => absent, }
+          -> class { 'xhmongo::client': ensure => absent, }
         EOS
         apply_manifest(pp, :catch_failures => true)
       end

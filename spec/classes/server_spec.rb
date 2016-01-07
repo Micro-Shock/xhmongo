@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::server' do
+describe 'xhmongo::server' do
   let :facts do
     {
       :osfamily        => 'Debian',
@@ -10,11 +10,11 @@ describe 'mongodb::server' do
 
   context 'with defaults' do
     it { is_expected.to compile.with_all_deps }
-    it { is_expected.to contain_class('mongodb::server::install').
-        that_comes_before('Class[mongodb::server::config]') }
-    it { is_expected.to contain_class('mongodb::server::config').
-        that_notifies('Class[mongodb::server::service]') }
-    it { is_expected.to contain_class('mongodb::server::service') }
+    it { is_expected.to contain_class('xhmongo::server::install').
+        that_comes_before('Class[xhmongo::server::config]') }
+    it { is_expected.to contain_class('xhmongo::server::config').
+        that_notifies('Class[xhmongo::server::service]') }
+    it { is_expected.to contain_class('xhmongo::server::service') }
   end
 
   context 'with create_admin => true' do
@@ -26,11 +26,11 @@ describe 'mongodb::server' do
       }
     end
     it { is_expected.to compile.with_all_deps }
-    it { is_expected.to contain_class('mongodb::server::install').
-        that_comes_before('Class[mongodb::server::config]') }
-    it { is_expected.to contain_class('mongodb::server::config').
-        that_notifies('Class[mongodb::server::service]') }
-    it { is_expected.to contain_class('mongodb::server::service') }
+    it { is_expected.to contain_class('xhmongo::server::install').
+        that_comes_before('Class[xhmongo::server::config]') }
+    it { is_expected.to contain_class('xhmongo::server::config').
+        that_notifies('Class[xhmongo::server::service]') }
+    it { is_expected.to contain_class('xhmongo::server::service') }
 
     it {
         is_expected.to contain_mongodb__db('admin').with({
@@ -40,7 +40,7 @@ describe 'mongodb::server' do
                          "readAnyDatabase", "readWriteAnyDatabase", "userAdminAnyDatabase",
                          "clusterAdmin", "clusterManager", "clusterMonitor", "hostManager",
                          "root", "restore"]
-        }).that_requires('Anchor[mongodb::server::end]')
+        }).that_requires('Anchor[xhmongo::server::end]')
       }
   end
 
@@ -69,7 +69,7 @@ describe 'mongodb::server' do
     end
     context "on >= 2.6" do
       let(:pre_condition) do
-        "class { 'mongodb::globals': version => '2.6.6', }"
+        "class { 'xhmongo::globals': version => '2.6.6', }"
       end
       it "isn't set when undef" do
         is_expected.to_not contain_file('/etc/mongodb.conf').with_content(/net\.http\.enabled/)
@@ -127,7 +127,7 @@ describe 'mongodb::server' do
         }
       end
 
-      it { is_expected.to contain_class('mongodb::replset').with_sets(rsConf) }
+      it { is_expected.to contain_class('xhmongo::replset').with_sets(rsConf) }
     end
 
     context 'should setup using replset_members' do
@@ -155,7 +155,7 @@ describe 'mongodb::server' do
         }
       end
 
-      it { is_expected.to contain_class('mongodb::replset').with_sets(rsConf) }
+      it { is_expected.to contain_class('xhmongo::replset').with_sets(rsConf) }
     end
   end
 end

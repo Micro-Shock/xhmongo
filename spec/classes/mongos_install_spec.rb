@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::mongos::install', :type => :class do
+describe 'xhmongo::mongos::install', :type => :class do
 
   describe 'it should include package' do
 
@@ -12,7 +12,7 @@ describe 'mongodb::mongos::install', :type => :class do
     end
 
     let :pre_condition do
-      "class { 'mongodb::mongos':
+      "class { 'xhmongo::mongos':
          configdb     => ['127.0.0.1:27019'],
          package_name => 'mongo-foo',
        }"

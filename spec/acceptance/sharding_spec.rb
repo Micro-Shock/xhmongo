@@ -5,8 +5,8 @@ if hosts.length > 1
 
     it 'configures the shard server' do
       pp = <<-EOS
-        class { 'mongodb::globals': }
-        -> class { 'mongodb::server':
+        class { 'xhmongo::globals': }
+        -> class { 'xhmongo::server':
           bind_ip   => '0.0.0.0',
           replset   => 'foo',
           shardsvr  => true,
@@ -15,7 +15,7 @@ if hosts.length > 1
           members => ["shard:27018"],
         }
         if $::osfamily == 'RedHat' {
-          class { 'mongodb::client': }
+          class { 'xhmongo::client': }
         }
       EOS
 
@@ -25,12 +25,12 @@ if hosts.length > 1
 
     it 'configures the router server' do
       pp = <<-EOS
-        class { 'mongodb::globals': }
-        -> class { 'mongodb::server':
+        class { 'xhmongo::globals': }
+        -> class { 'xhmongo::server':
           bind_ip   => '0.0.0.0',
           configsvr => true,
         } ->
-        class { 'mongodb::mongos' :
+        class { 'xhmongo::mongos' :
           configdb => ["router:27019"],
         } ->
         exec { '/bin/sleep 20' :
@@ -40,7 +40,7 @@ if hosts.length > 1
           keys   => [{'foo.toto' => {'name' => 1}}]
         }
         if $::osfamily == 'RedHat' {
-          class { 'mongodb::client': }
+          class { 'xhmongo::client': }
         }
       EOS
 

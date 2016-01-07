@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'mongodb::server::config', :type => :class do
+describe 'xhmongo::server::config', :type => :class do
 
   describe 'with preseted variables' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' }", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' }", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf')
@@ -12,7 +12,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'with default values' do
-    let(:pre_condition) {[ "class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $create_admin = false $rcfile = '/root/.mongorc.js' $store_creds = true $ensure = present $user = 'mongod' $group = 'mongod' $port = 29017 $bind_ip = ['0.0.0.0'] $fork = true $logpath ='/var/log/mongo/mongod.log' $logappend = true }",  "include mongodb::server" ]}
+    let(:pre_condition) {[ "class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $create_admin = false $rcfile = '/root/.mongorc.js' $store_creds = true $ensure = present $user = 'mongod' $group = 'mongod' $port = 29017 $bind_ip = ['0.0.0.0'] $fork = true $logpath ='/var/log/mongo/mongod.log' $logappend = true }",  "include xhmongo::server" ]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with({
@@ -33,7 +33,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'with absent ensure' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = absent }", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = absent }", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with({ :ensure => 'absent' })
@@ -42,7 +42,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'when specifying storage_engine' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.monogrc.js' $ensure = present $version='3.0.3' $storage_engine = 'SomeEngine' $storage_engine_internal = 'SomeEngine' $user = 'mongod' $group = 'mongod' $port = 29017 $bind_ip = ['0.0.0.0'] $fork = true $logpath ='/var/log/mongo/mongod.log' $logappend = true}", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.monogrc.js' $ensure = present $version='3.0.3' $storage_engine = 'SomeEngine' $storage_engine_internal = 'SomeEngine' $user = 'mongod' $group = 'mongod' $port = 29017 $bind_ip = ['0.0.0.0'] $fork = true $logpath ='/var/log/mongo/mongod.log' $logappend = true}", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with_content(/storage.engine:\sSomeEngine/)
@@ -50,7 +50,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'with specific bind_ip values and ipv6' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $bind_ip = ['127.0.0.1', 'fd00:beef:dead:55::143'] $ipv6 = true }", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $bind_ip = ['127.0.0.1', 'fd00:beef:dead:55::143'] $ipv6 = true }", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with_content(/bind_ip\s=\s127\.0\.0\.1\,fd00:beef:dead:55::143/)
@@ -59,7 +59,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'with specific bind_ip values' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $bind_ip = ['127.0.0.1', '10.1.1.13']}", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $bind_ip = ['127.0.0.1', '10.1.1.13']}", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with_content(/bind_ip\s=\s127\.0\.0\.1\,10\.1\.1\.13/)
@@ -67,7 +67,7 @@ describe 'mongodb::server::config', :type => :class do
   end
 
   describe 'when specifying auth to true' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $auth = true $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $auth = true $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with_content(/^auth=true/)
@@ -76,7 +76,7 @@ describe 'mongodb::server::config', :type => :class do
   end
   
   describe 'when specifying set_parameter value' do
-    let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $set_parameter = 'textSearchEnable=true' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include mongodb::server"]}
+    let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $set_parameter = 'textSearchEnable=true' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include xhmongo::server"]}
 
     it {
       is_expected.to contain_file('/etc/mongod.conf').with_content(/^setParameter = textSearchEnable=true/)
@@ -85,7 +85,7 @@ describe 'mongodb::server::config', :type => :class do
 
   describe 'with journal:' do
     context 'on true with i686 architecture' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $journal = true }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $journal = true }", "include xhmongo::server"]}
       let (:facts) { { :architecture => 'i686' } }
 
       it {
@@ -98,14 +98,14 @@ describe 'mongodb::server::config', :type => :class do
   describe 'with quota to' do
 
     context 'true and without quotafiles' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $quota = true }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $quota = true }", "include xhmongo::server"]}
       it {
         is_expected.to contain_file('/etc/mongod.conf').with_content(/^quota = true/)
       }
     end
 
     context 'true and with quotafiles' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $quota = true $quotafiles = 1 }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $quota = true $quotafiles = 1 }", "include xhmongo::server"]}
 
       it {
         is_expected.to contain_file('/etc/mongod.conf').with_content(/quota = true/)
@@ -116,7 +116,7 @@ describe 'mongodb::server::config', :type => :class do
 
   describe 'when specifying syslog value' do
     context 'it should be set to true' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $syslog = true }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $syslog = true }", "include xhmongo::server"]}
 
       it {
         is_expected.to contain_file('/etc/mongod.conf').with_content(/^syslog = true/)
@@ -124,7 +124,7 @@ describe 'mongodb::server::config', :type => :class do
     end
 
     context 'if logpath is also set an error should be raised' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $syslog = true $logpath ='/var/log/mongo/mongod.log' }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $syslog = true $logpath ='/var/log/mongo/mongod.log' }", "include xhmongo::server"]}
 
       it {
         expect { is_expected.to contain_file('/etc/mongod.conf') }.to raise_error(Puppet::Error, /You cannot use syslog with logpath/)
@@ -135,7 +135,7 @@ describe 'mongodb::server::config', :type => :class do
 
   describe 'with store_creds' do
     context 'true' do 
-      let(:pre_condition) { ["class mongodb::server { $admin_username = 'admin' $admin_password = 'password' $auth = true $store_creds = true $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $admin_username = 'admin' $admin_password = 'password' $auth = true $store_creds = true $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present }", "include xhmongo::server"]}
 
       it {
         is_expected.to contain_file('/root/.mongorc.js').
@@ -148,7 +148,7 @@ describe 'mongodb::server::config', :type => :class do
     end
 
     context 'false' do
-      let(:pre_condition) { ["class mongodb::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $store_creds = false  }", "include mongodb::server"]}
+      let(:pre_condition) { ["class xhmongo::server { $config = '/etc/mongod.conf' $dbpath = '/var/lib/mongo' $rcfile = '/root/.mongorc.js' $ensure = present $store_creds = false  }", "include xhmongo::server"]}
 
       it {
         is_expected.to contain_file('/root/.mongorc.js').with_ensure('absent')

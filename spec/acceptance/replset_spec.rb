@@ -7,14 +7,14 @@ if hosts.length > 1
       on hosts, %{mongo local --verbose --eval 'db.dropDatabase()'}
 
       pp = <<-EOS
-        class { 'mongodb::globals': }
-        -> class { 'mongodb::server':
+        class { 'xhmongo::globals': }
+        -> class { 'xhmongo::server':
           ensure         => absent,
           package_ensure => absent,
           service_ensure => stopped
         }
         if $::osfamily == 'RedHat' {
-          class { 'mongodb::client':
+          class { 'xhmongo::client':
             ensure => absent
           }
         }
@@ -25,13 +25,13 @@ if hosts.length > 1
 
     it 'configures mongo on both nodes' do
       pp = <<-EOS
-        class { 'mongodb::globals': }
-        -> class { 'mongodb::server':
+        class { 'xhmongo::globals': }
+        -> class { 'xhmongo::server':
           bind_ip => '0.0.0.0',
           replset => 'test',
         }
         if $::osfamily == 'RedHat' {
-          class { 'mongodb::client': }
+          class { 'xhmongo::client': }
         }
       EOS
 
@@ -77,14 +77,14 @@ if hosts.length > 1
       on hosts, %{mongo local --verbose --eval 'db.dropDatabase()'}
 
       pp = <<-EOS
-        class { 'mongodb::globals': }
-        -> class { 'mongodb::server':
+        class { 'xhmongo::globals': }
+        -> class { 'xhmongo::server':
           ensure => absent,
           package_ensure => absent,
           service_ensure => stopped
         }
         if $::osfamily == 'RedHat' {
-          class { 'mongodb::client':
+          class { 'xhmongo::client':
             ensure => absent
           }
         }
@@ -95,11 +95,11 @@ if hosts.length > 1
 
     it 'configures mongo on both nodes' do
       pp = <<-EOS
-        class { 'mongodb::globals':
+        class { 'xhmongo::globals':
           version             => '2.6.9-1',
           manage_package_repo => true
         } ->
-        class { 'mongodb::server':
+        class { 'xhmongo::server':
           admin_username => 'admin',
           admin_password => 'password',
           auth           => true,
@@ -125,7 +125,7 @@ YXIsJ0gYcu9XG3mx10LbdPJvxSMg'
  
         }
         if $::osfamily == 'RedHat' {
-          include mongodb::client
+          include xhmongo::client
         }
       EOS
 
@@ -135,11 +135,11 @@ YXIsJ0gYcu9XG3mx10LbdPJvxSMg'
 
     it 'sets up the replset with puppet' do
       pp = <<-EOS
-        class { 'mongodb::globals':
+        class { 'xhmongo::globals':
           version             => '2.6.9-1',
           manage_package_repo => true
         } ->
-        class { 'mongodb::server':
+        class { 'xhmongo::server':
           create_admin   => true,
           admin_username => 'admin',
           admin_password => 'password',
@@ -165,7 +165,7 @@ nc1ohyB0lNt8lHf1U00mtgDSV3fwo5LkwhRi6d+bDBTL/C6MZETMLdyCqDlTdUWG
 YXIsJ0gYcu9XG3mx10LbdPJvxSMg'
         }
         if $::osfamily == 'RedHat' {
-          include mongodb::client
+          include xhmongo::client
         }
         mongodb_replset { 'test':
           auth_enabled => true,

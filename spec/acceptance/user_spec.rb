@@ -14,22 +14,22 @@ describe 'mongodb_database' do
           after :all do
             puts "XXX uninstalls mongodb because changing the port with tengen doesn't work because they have a crappy init script"
             pp = <<-EOS
-              class {'mongodb::globals': manage_package_repo => true, }
-              -> class { 'mongodb::server':
+              class {'xhmongo::globals': manage_package_repo => true, }
+              -> class { 'xhmongo::server':
                    ensure => absent,
                    package_ensure => absent,
                    service_ensure => stopped,
                    service_enable => false
                  }
-              -> class { 'mongodb::client': ensure => absent, }
+              -> class { 'xhmongo::client': ensure => absent, }
             EOS
             apply_manifest(pp, :catch_failures => true)
           end
           it 'should compile with no errors' do
             pp = <<-EOS
-              class { 'mongodb::globals': manage_package_repo => true, version => #{version.nil? ? 'undef' : version} }
-              -> class { 'mongodb::server': }
-              -> class { 'mongodb::client': }
+              class { 'xhmongo::globals': manage_package_repo => true, version => #{version.nil? ? 'undef' : version} }
+              -> class { 'xhmongo::server': }
+              -> class { 'xhmongo::client': }
               -> mongodb_database { 'testdb': ensure => present }
               ->
               mongodb_user {'testuser':
@@ -55,22 +55,22 @@ describe 'mongodb_database' do
           after :all do
             puts "XXX uninstalls mongodb because changing the port with tengen doesn't work because they have a crappy init script"
             pp = <<-EOS
-              class {'mongodb::globals': manage_package_repo => true, }
-              -> class { 'mongodb::server':
+              class {'xhmongo::globals': manage_package_repo => true, }
+              -> class { 'xhmongo::server':
                    ensure => absent,
                    package_ensure => absent,
                    service_ensure => stopped,
                    service_enable => false
                  }
-              -> class { 'mongodb::client': ensure => absent, }
+              -> class { 'xhmongo::client': ensure => absent, }
             EOS
             apply_manifest(pp, :catch_failures => true)
           end
           it 'should work with no errors' do
             pp = <<-EOS
-              class { 'mongodb::globals': manage_package_repo => true, }
-              -> class { 'mongodb::server': port => 27018 }
-              -> class { 'mongodb::client': }
+              class { 'xhmongo::globals': manage_package_repo => true, }
+              -> class { 'xhmongo::server': port => 27018 }
+              -> class { 'xhmongo::client': }
               -> mongodb_database { 'testdb': ensure => present }
               ->
               mongodb_user {'testuser':

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mongodb::mongos::config' do
+describe 'xhmongo::mongos::config' do
 
   describe 'it should create mongos configuration file' do
 
@@ -12,7 +12,7 @@ describe 'mongodb::mongos::config' do
     end
 
     let :pre_condition do
-      "class { 'mongodb::mongos': }"
+      "class { 'xhmongo::mongos': }"
     end
 
     it {

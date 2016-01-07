@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'mongodb::mongos class' do
+describe 'xhmongo::mongos class' do
 
   shared_examples 'normal tests' do |tengen|
     if tengen
@@ -18,15 +18,15 @@ describe 'mongodb::mongos class' do
         if tengen
           puts "XXX uninstalls mongodb and mongos because changing the port with tengen doesn't work because they have a crappy init script"
           pp = <<-EOS
-            class {'mongodb::globals': manage_package_repo => #{tengen}, }
-            -> class { 'mongodb::server':
+            class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+            -> class { 'xhmongo::server':
                  ensure => absent,
                  package_ensure => absent,
                  service_ensure => stopped,
                  service_enable => false
                }
-            -> class { 'mongodb::client': ensure => absent, }
-            -> class { 'mongodb::mongos':
+            -> class { 'xhmongo::client': ensure => absent, }
+            -> class { 'xhmongo::mongos':
                  ensure => absent,
                  package_ensure => absent,
                  service_ensure => stopped,
@@ -39,12 +39,12 @@ describe 'mongodb::mongos class' do
 
       it 'should work with no errors' do
         pp = <<-EOS
-          class { 'mongodb::globals': manage_package_repo => #{tengen},
-          } -> class { 'mongodb::server':
+          class { 'xhmongo::globals': manage_package_repo => #{tengen},
+          } -> class { 'xhmongo::server':
                configsvr => true,
           }
-          -> class { 'mongodb::client': }
-          -> class { 'mongodb::mongos':
+          -> class { 'xhmongo::client': }
+          -> class { 'xhmongo::mongos':
                configdb => ['127.0.0.1:27019'],
           }
         EOS
@@ -85,15 +85,15 @@ describe 'mongodb::mongos class' do
     describe "uninstalling with 10gen => #{tengen}" do
       it 'uninstalls mongodb' do
         pp = <<-EOS
-          class {'mongodb::globals': manage_package_repo => #{tengen}, }
-          -> class { 'mongodb::server':
+          class {'xhmongo::globals': manage_package_repo => #{tengen}, }
+          -> class { 'xhmongo::server':
                ensure => absent,
                package_ensure => absent,
                service_ensure => stopped,
                service_enable => false
              }
-          -> class { 'mongodb::client': ensure => absent, }
-          -> class { 'mongodb::mongos':
+          -> class { 'xhmongo::client': ensure => absent, }
+          -> class { 'xhmongo::mongos':
                ensure         => absent,
                package_ensure => absent,
                service_ensure => stopped,

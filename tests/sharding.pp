@@ -1,15 +1,15 @@
 node 'mongos' {
 
-  class {'::mongodb::globals':
+  class {'::xhmongo::globals':
     manage_package_repo => true,
   }->
-  class {'::mongodb::server':
+  class {'::xhmongo::server':
     configsvr => true,
     bind_ip   => $::ipaddress,
   }->
-  class {'::mongodb::client':
+  class {'::xhmongo::client':
   }->
-  class {'::mongodb::mongos':
+  class {'::xhmongo::mongos':
     configdb => ["${::ipaddress}:27019"],
   }->
   mongodb_shard { 'rs1' :
@@ -25,15 +25,15 @@ node 'mongos' {
 
 node 'mongod1' {
 
-  class {'::mongodb::globals':
+  class {'::xhmongo::globals':
     manage_package_repo => true,
   }->
-  class {'::mongodb::server':
+  class {'::xhmongo::server':
     shardsvr => true,
     replset  => 'rs1',
     bind_ip  => $::ipaddress,
   }->
-  class {'::mongodb::client':
+  class {'::xhmongo::client':
   }
   mongodb_replset{'rs1':
     members => ['mongod1:27018', 'mongod2:27018'],
@@ -42,15 +42,15 @@ node 'mongod1' {
 
 node 'mongod2' {
 
-  class {'::mongodb::globals':
+  class {'::xhmongo::globals':
     manage_package_repo => true,
   }->
-  class {'::mongodb::server':
+  class {'::xhmongo::server':
     shardsvr => true,
     replset  => 'rs1',
     bind_ip  => $::ipaddress,
   }->
-  class {'::mongodb::client':
+  class {'::xhmongo::client':
   }
   mongodb_replset{'rs1':
     members => ['mongod1:27018', 'mongod2:27018'],

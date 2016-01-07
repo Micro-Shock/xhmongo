@@ -1,2 +1,2 @@
-class { '::mongodb::globals': manage_package_repo => true }->
-class { '::mongodb::client': }
+class { '::xhmongo::globals': manage_package_repo => true }->
+class { '::xhmongo::client': }

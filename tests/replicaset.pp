@@ -1,8 +1,8 @@
 node default {
-  class { '::mongodb::globals':
+  class { '::xhmongo::globals':
     manage_package_repo => true
   } ->
-  class { '::mongodb::server':
+  class { '::xhmongo::server':
     smallfiles => true,
     bind_ip    => ['0.0.0.0'],
     replset    => 'rsmain'

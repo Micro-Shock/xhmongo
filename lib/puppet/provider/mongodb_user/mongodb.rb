@@ -1,5 +1,5 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'mongodb'))
-Puppet::Type.type(:mongodb_user).provide(:mongodb, :parent => Puppet::Provider::Mongodb) do
+Puppet::Type.type(:mongodb_user).provide(:mongodb, :parent => Puppet::Provider::Xhmongo) do
 
   desc "Manage users for a MongoDB database."
 

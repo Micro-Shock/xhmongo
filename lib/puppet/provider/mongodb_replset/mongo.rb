@@ -3,7 +3,7 @@
 #
 
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'mongodb'))
-Puppet::Type.type(:mongodb_replset).provide(:mongo, :parent => Puppet::Provider::Mongodb) do
+Puppet::Type.type(:mongodb_replset).provide(:mongo, :parent => Puppet::Provider::Xhmongo) do
 
   desc "Manage hosts members for a replicaset."
 

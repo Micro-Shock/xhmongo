@@ -1,6 +1,6 @@
 require 'yaml'
 require 'json'
-class Puppet::Provider::Mongodb < Puppet::Provider
+class Puppet::Provider::Xhmongo < Puppet::Provider
 
   # Without initvars commands won't work.
   initvars

@@ -135,7 +135,7 @@ class xhmongo::server::config {
       # - $syslog
       # - $verbose
       # - $verbositylevel
-      $cfg_content = template('mongodb/mongodb.conf.2.6.erb')
+      $cfg_content = template('xhmongo/mongodb.conf.2.6.erb')
     } else {
       # Fall back to oldest most basic config
       # Template uses:
@@ -189,7 +189,7 @@ class xhmongo::server::config {
       # - $syslog
       # - $verbose
       # - $verbositylevel
-      $cfg_content = template('mongodb/mongodb.conf.erb')
+      $cfg_content = template('xhmongo/mongodb.conf.erb')
     }
 
     file { $config:
@@ -220,7 +220,7 @@ class xhmongo::server::config {
   if $auth and $store_creds {
     file { $rcfile:
       ensure  => present,
-      content => template('mongodb/mongorc.js.erb'),
+      content => template('xhmongo/mongorc.js.erb'),
       owner   => 'root',
       group   => 'root',
       mode    => '0644'

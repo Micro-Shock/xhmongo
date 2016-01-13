@@ -5,7 +5,7 @@ require 'uri'
 
 module Puppet
   module Util
-    class MongodbValidator
+    class XhmongoValidator
       attr_reader :mongodb_server
       attr_reader :mongodb_port
 

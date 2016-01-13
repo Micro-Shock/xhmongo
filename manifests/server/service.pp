@@ -47,7 +47,7 @@ class xhmongo::server::service {
     }
 
     if $service_ensure {
-      mongodb_conn_validator { 'mongodb':
+      mongodb_conn_validator { 'xhmongo':
         server  => $bind_ip_real,
         port    => $port_real,
         timeout => '240',

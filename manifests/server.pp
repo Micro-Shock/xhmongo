@@ -126,10 +126,10 @@ class xhmongo::server (
     }
 
     # Make sure it runs at the correct point
-    Anchor['xhmongo::server::end'] -> xhmongo::Db['admin']
+    Anchor['xhmongo::server::end'] -> Xhmongo::Db['admin']
 
     # Make sure it runs before other DB creation
-    xhmongo::Db['admin'] -> xhmongo::Db <| title != 'admin' |>
+    Xhmongo::Db['admin'] -> Xhmongo::Db <| title != 'admin' |>
   }
 
   # Set-up replicasets
@@ -167,7 +167,7 @@ class xhmongo::server (
 
       # Make sure that the ordering is correct
       if $create_admin {
-        Class['xhmongo::replset'] -> xhmongo::Db['admin']
+        Class['xhmongo::replset'] -> Xhmongo::Db['admin']
       }
 
     }

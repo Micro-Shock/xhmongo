@@ -33,7 +33,7 @@
 # Copyright 2013 PuppetLabs
 #
 
-class mongodb (
+class xhmongo (
   # Deprecated parameters
   $enable_10gen    = undef,
 
